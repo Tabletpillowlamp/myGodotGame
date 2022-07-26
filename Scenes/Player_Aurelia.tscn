@@ -1,0 +1,588 @@
+[gd_scene load_steps=28 format=2]
+
+[ext_resource path="res://Assets/Graphics/Aurelia/Aurelia_1.png" type="Texture" id=1]
+[ext_resource path="res://Scripts/Player_Control.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 7, 20 )
+
+[sub_resource type="RectangleShape2D" id=18]
+extents = Vector2( 7, 12 )
+
+[sub_resource type="Animation" id=12]
+resource_name = "Duck_Left"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 35 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StandingCollision:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=13]
+resource_name = "Duck_Right"
+length = 0.1
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 34 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StandingCollision:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=14]
+resource_name = "Ducking_Left"
+length = 0.15
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 45, 46, 47 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StandingCollision:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=15]
+resource_name = "Ducking_Right"
+length = 0.15
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 42, 43, 44 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StandingCollision:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "Falling_Left"
+length = 0.7
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 21, 22, 21, 23 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StandingCollision:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "Falling_Right"
+length = 0.7
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 18, 19, 18, 20 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StandingCollision:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=16]
+resource_name = "GettingUp_Left"
+length = 0.15
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 47, 46, 45 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StandingCollision:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.05 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=17]
+resource_name = "GettingUp_Right"
+length = 0.15
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.05, 0.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 44, 43, 42 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StandingCollision:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.05 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Idle_Left"
+length = 4.75
+loop = true
+step = 0.125
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.125, 2.25, 2.375, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4, 4.125, 4.25, 4.375, 4.5, 4.625 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 3, 4, 3, 5, 3, 4, 3, 5, 3, 15, 28, 15, 3, 5, 3, 4, 3, 5, 3, 39, 52, 40, 3, 5 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StandingCollision:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "Idle_Right"
+length = 4.75
+loop = true
+step = 0.125
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 2.125, 2.25, 2.375, 2.5, 2.75, 3, 3.25, 3.5, 3.75, 4, 4.125, 4.25, 4.375, 4.5, 4.625 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 0, 2, 0, 1, 0, 2, 0, 12, 25, 13, 0, 2, 0, 1, 0, 2, 0, 36, 49, 37, 0, 2 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StandingCollision:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=8]
+resource_name = "Jumping_Left"
+length = 0.7
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 9, 10, 9, 11 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StandingCollision:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=9]
+resource_name = "Jumping_Right"
+length = 0.7
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 6, 7, 6, 8 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StandingCollision:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=11]
+resource_name = "Landing_Left"
+length = 0.5
+step = 0.0625
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.0625, 0.1875, 0.3125, 0.4375 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 47, 35, 47, 46, 45 ]
+}
+
+[sub_resource type="Animation" id=10]
+resource_name = "Landing_Right"
+length = 0.5
+step = 0.0625
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.0625, 0.1875, 0.3125, 0.4375 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 44, 34, 44, 43, 42 ]
+}
+
+[sub_resource type="Animation" id=22]
+resource_name = "Spear_Duck_Left"
+length = 0.34375
+step = 0.03125
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.03125, 0.0625, 0.09375, 0.25, 0.28125, 0.3125 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 90, 91, 92, 93, 92, 91, 90 ]
+}
+
+[sub_resource type="Animation" id=23]
+resource_name = "Spear_Duck_Right"
+length = 0.34375
+step = 0.03125
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.03125, 0.0625, 0.09375, 0.25, 0.28125, 0.3125 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 78, 79, 80, 81, 80, 79, 78 ]
+}
+
+[sub_resource type="Animation" id=24]
+resource_name = "Spear_Jump_Left"
+length = 0.21875
+step = 0.03125
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.03125, 0.0625, 0.15625, 0.1875 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 87, 88, 89, 88, 87 ]
+}
+
+[sub_resource type="Animation" id=25]
+resource_name = "Spear_Jump_Right"
+length = 0.21875
+step = 0.03125
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.03125, 0.0625, 0.15625, 0.1875 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 84, 85, 86, 85, 84 ]
+}
+
+[sub_resource type="Animation" id=19]
+resource_name = "Spear_Left"
+length = 0.34375
+step = 0.03125
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.03125, 0.0625, 0.09375, 0.25, 0.28125, 0.3125 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 66, 67, 68, 69, 68, 67, 66 ]
+}
+
+[sub_resource type="Animation" id=20]
+resource_name = "Spear_Right"
+length = 0.34375
+step = 0.03125
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.03125, 0.0625, 0.09375, 0.25, 0.28125, 0.3125 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 54, 55, 56, 57, 56, 55, 54 ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "Walk_Left"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 72, 73, 74, 73, 72, 75, 76, 77, 76, 75 ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "Walk_Right"
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 60, 61, 62, 61, 60, 63, 64, 65, 64, 63 ]
+}
+
+[sub_resource type="RectangleShape2D" id=21]
+extents = Vector2( 22.5, 3.5 )
+
+[node name="Aurelia" type="KinematicBody2D"]
+script = ExtResource( 2 )
+
+[node name="Aurelia_Normal" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+hframes = 12
+vframes = 12
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 0.45, 0.45 )
+process_mode = 0
+limit_smoothed = true
+drag_margin_v_enabled = true
+
+[node name="StandingCollision" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 3 )
+shape = SubResource( 1 )
+
+[node name="DuckingColision" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 11 )
+shape = SubResource( 18 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Duck_Left = SubResource( 12 )
+anims/Duck_Right = SubResource( 13 )
+anims/Ducking_Left = SubResource( 14 )
+anims/Ducking_Right = SubResource( 15 )
+anims/Falling_Left = SubResource( 6 )
+anims/Falling_Right = SubResource( 7 )
+anims/GettingUp_Left = SubResource( 16 )
+anims/GettingUp_Right = SubResource( 17 )
+anims/Idle_Left = SubResource( 3 )
+anims/Idle_Right = SubResource( 2 )
+anims/Jumping_Left = SubResource( 8 )
+anims/Jumping_Right = SubResource( 9 )
+anims/Landing_Left = SubResource( 11 )
+anims/Landing_Right = SubResource( 10 )
+anims/Spear_Duck_Left = SubResource( 22 )
+anims/Spear_Duck_Right = SubResource( 23 )
+anims/Spear_Jump_Left = SubResource( 24 )
+anims/Spear_Jump_Right = SubResource( 25 )
+anims/Spear_Left = SubResource( 19 )
+anims/Spear_Right = SubResource( 20 )
+anims/Walk_Left = SubResource( 4 )
+anims/Walk_Right = SubResource( 5 )
+
+[node name="Spear" type="Area2D" parent="."]
+
+[node name="SpearHitStand_Right" type="CollisionShape2D" parent="Spear"]
+visible = false
+position = Vector2( 33, 9 )
+shape = SubResource( 21 )
+disabled = true
+
+[node name="Sprite" type="Sprite" parent="Spear"]
