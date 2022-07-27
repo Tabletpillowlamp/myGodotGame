@@ -1,13 +1,76 @@
-[gd_scene load_steps=28 format=2]
+[gd_scene load_steps=33 format=2]
 
 [ext_resource path="res://Assets/Graphics/Aurelia/Aurelia_1.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Player_Control.gd" type="Script" id=2]
+[ext_resource path="res://Assets/Graphics/Aurelia/Weapons_1.png" type="Texture" id=3]
+[ext_resource path="res://Spear.tres" type="Animation" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 7, 20 )
 
 [sub_resource type="RectangleShape2D" id=18]
 extents = Vector2( 7, 12 )
+
+[sub_resource type="RectangleShape2D" id=21]
+extents = Vector2( 22.5, 3.5 )
+
+[sub_resource type="Animation" id=26]
+resource_name = "Clinging_Left"
+length = 0.7
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 99, 100, 99, 101 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StandingCollision:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=27]
+resource_name = "Clinging_Right"
+length = 0.7
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 96, 97, 96, 98 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("StandingCollision:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=12]
 resource_name = "Duck_Left"
@@ -527,8 +590,34 @@ tracks/0/keys = {
 "values": [ 60, 61, 62, 61, 60, 63, 64, 65, 64, 63 ]
 }
 
-[sub_resource type="RectangleShape2D" id=21]
-extents = Vector2( 22.5, 3.5 )
+[sub_resource type="Animation" id=28]
+resource_name = "Swing_Normal_Left"
+length = 0.34375
+step = 0.015625
+tracks/0/type = "value"
+tracks/0/path = NodePath("Spear_Normal_Left:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.015625, 0.03125, 0.046875, 0.0625, 0.078125, 0.09375, 0.25, 0.265625, 0.28125, 0.296875, 0.3125 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 1, 2, 3, 4, 5, 6, 7, 8, 3, 2, 1, 0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Spear_Normal_Right:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 0 ]
+}
 
 [node name="Aurelia" type="KinematicBody2D"]
 script = ExtResource( 2 )
@@ -537,8 +626,10 @@ script = ExtResource( 2 )
 texture = ExtResource( 1 )
 hframes = 12
 vframes = 12
+frame = 54
 
 [node name="Camera2D" type="Camera2D" parent="."]
+visible = false
 current = true
 zoom = Vector2( 0.45, 0.45 )
 process_mode = 0
@@ -546,14 +637,42 @@ limit_smoothed = true
 drag_margin_v_enabled = true
 
 [node name="StandingCollision" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0, 3 )
 shape = SubResource( 1 )
 
 [node name="DuckingColision" type="CollisionShape2D" parent="."]
+visible = false
 position = Vector2( 0, 11 )
 shape = SubResource( 18 )
 
+[node name="Spear" type="Area2D" parent="."]
+
+[node name="SpearHitStand_Right" type="CollisionShape2D" parent="Spear"]
+visible = false
+position = Vector2( 33, 9 )
+shape = SubResource( 21 )
+disabled = true
+
+[node name="Spear_Normal_Right" type="Sprite" parent="Spear"]
+position = Vector2( 45, 0 )
+scale = Vector2( 1, 0.979167 )
+texture = ExtResource( 3 )
+hframes = 12
+vframes = 12
+frame = 1
+
+[node name="Spear_Normal_Left" type="Sprite" parent="Spear"]
+position = Vector2( -45, 0 )
+scale = Vector2( 1, 0.979167 )
+texture = ExtResource( 3 )
+flip_h = true
+hframes = 12
+vframes = 12
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Clinging_Left = SubResource( 26 )
+anims/Clinging_Right = SubResource( 27 )
 anims/Duck_Left = SubResource( 12 )
 anims/Duck_Right = SubResource( 13 )
 anims/Ducking_Left = SubResource( 14 )
@@ -577,12 +696,7 @@ anims/Spear_Right = SubResource( 20 )
 anims/Walk_Left = SubResource( 4 )
 anims/Walk_Right = SubResource( 5 )
 
-[node name="Spear" type="Area2D" parent="."]
-
-[node name="SpearHitStand_Right" type="CollisionShape2D" parent="Spear"]
-visible = false
-position = Vector2( 33, 9 )
-shape = SubResource( 21 )
-disabled = true
-
-[node name="Sprite" type="Sprite" parent="Spear"]
+[node name="AnimationSpear" type="AnimationPlayer" parent="."]
+root_node = NodePath("../Spear")
+anims/Swing_Normal_Left = SubResource( 28 )
+anims/Swing_Normal_Right = ExtResource( 4 )

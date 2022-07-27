@@ -20,6 +20,7 @@ var wallJumped = false
 var wallJumpFrames = 0
 
 onready var ani = $AnimationPlayer
+onready var aniSpear = $AnimationSpear
 
 func get_input(delta):
 	velocity.x = 0
@@ -82,6 +83,7 @@ func animate_player():
 
 		if attacking:
 			if !ducked: #Grounded Attack
+				aniSpear.play("Swing_Normal_Right") if direction == 1 else aniSpear.play("Swing_Normal_Left")
 				ani.play("Spear_Right") if direction == 1 else ani.play("Spear_Left")
 				Global.canInput = false; yield(ani, "animation_finished"); Global.canInput = true
 			else:		#Ducked Attack
@@ -91,7 +93,7 @@ func animate_player():
 			bigFall = false
 
 		if landing:
-			if attacking: attacking = false
+			#attacking = false
 			if bigFall:
 				ani.play("Landing_Right") if direction == 1 else ani.play("Landing_Left")
 				Global.canInput = false; yield(ani, "animation_finished"); Global.canInput = true
@@ -122,10 +124,13 @@ func animate_player():
 
 	else:
 		if attacking: #Air Attack
+			aniSpear.play("Swing_Normal_Right") if direction == 1 else aniSpear.play("Swing_Normal_Left")
 			ani.play("Spear_Jump_Right") if direction == 1 else ani.play("Spear_Jump_Left")
 			yield(ani, "animation_finished")
 			attacking = false
-		if velocity.y <= 0:
+		if (is_on_wall()) and Global.canWallJump:
+			ani.play("Clinging_Right") if direction == 1 else ani.play("Clinging_Left")
+		elif velocity.y <= 0:
 			ani.play("Jumping_Right") if direction == 1 else ani.play("Jumping_Left")
 		else:
 			ani.play("Falling_Right") if direction == 1 else ani.play("Falling_Left")
@@ -141,7 +146,6 @@ func relaseDuckingPosition():
 	ducked = false
 	duckingReleased = false
 	Global.canMoveLeftRight = true
-
 
 func _physics_process(delta):
 	if Global.canInput: get_input(delta)
