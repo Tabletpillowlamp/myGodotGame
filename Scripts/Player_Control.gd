@@ -1,10 +1,19 @@
 extends KinematicBody2D
 
+const FLOOR_NORMAL = Vector2.UP
+const SNAP_DIRECTION = Vector2.DOWN
+const SNAP_LENGTH = 32.0
+const SLOPE_THRESHOLD = deg2rad(60)
+
+var loop = 0
 var speed : int = 170
 var air_speed : int = 120
 var jump_speed : int = 400
 var gravity : int = 950
+
 var velocity = Vector2()
+var snapVector = SNAP_DIRECTION * SNAP_LENGTH
+
 var direction = 1 # 1 = right, -1 = left
 var landing = false
 var bigFall = false
@@ -13,14 +22,14 @@ var ducked = false
 var duckingReleased = false
 var jumpHold = 0
 var attacking = false
+var atkAir = false
 var doubleJumped = false
-
-
 var wallJumped = false
-var wallJumpFrames = 0
 
-onready var ani = $AnimationPlayer
-onready var aniSpear = $AnimationSpear
+var timerTest = 0	#Debugging Purposes
+
+onready var ani = $Aurelia_Ani
+onready var aniSpear = $Spear_Ani
 
 func get_input(delta):
 	velocity.x = 0
@@ -36,15 +45,16 @@ func get_input(delta):
 			moveGrounded()
 
 	if Input.is_action_just_pressed("jump"):
+		snapVector = Vector2()
 		if (is_on_floor()):
-			velocity.y -= jump_speed
+			velocity.y = -jump_speed
 		elif Global.canWallJump and (is_on_wall()):
+			velocity.y = -jump_speed
 			direction *= -1
 			wallJumped = true
-			velocity.y = -jump_speed
 		elif Global.canDoubleJump and !doubleJumped:
-			wallJumped = false
 			velocity.y = -jump_speed
+			wallJumped = false
 			doubleJumped = true
 		if ducked:
 			relaseDuckingPosition()
@@ -66,40 +76,52 @@ func get_input(delta):
 		duckingReleased = true
 	if Input.is_action_just_pressed("attack"):
 		attacking = true
+		if !(is_on_floor()):
+			#Animation must be here to prevent falling animation to be played while
+			#atkAir is on creating a yield loop.
+			ani.play("Spear_Jump_Right") if direction == 1 else ani.play("Spear_Jump_Left")
+			atkAir = true
 
 	#gravity
 	velocity.y += gravity * delta
-	velocity = move_and_slide(velocity, Vector2.UP)
+	if snapVector != Vector2():
+		velocity.y = move_and_slide_with_snap(velocity,snapVector,FLOOR_NORMAL
+			,true,4,SLOPE_THRESHOLD).y 
+	else:
+		velocity.y = move_and_slide(velocity,FLOOR_NORMAL).y
+	if (is_on_floor()) and snapVector == Vector2():
+		reset_snap()
 
-	if velocity.y > 0 and !(is_on_floor()):
-		landing = true
-		if velocity.y > 500: bigFall = true
+	if velocity.y > 0 and !(is_on_floor()) and !landing: landing = true
+	if velocity.y > 500 and !(is_on_floor()) and !bigFall: bigFall = true
 
 func animate_player():
-	if (is_on_floor()):
+	if (is_on_floor()):	#On the Ground
 
 		doubleJumped = false
 		wallJumped = false
 
 		if attacking:
 			if !ducked: #Grounded Attack
-				aniSpear.play("Swing_Normal_Right") if direction == 1 else aniSpear.play("Swing_Normal_Left")
-				ani.play("Spear_Right") if direction == 1 else ani.play("Spear_Left")
+				if !atkAir:
+					ani.play("Spear_Right") if direction == 1 else ani.play("Spear_Left")
+					aniSpear.play("Swing_Normal_Right") if direction == 1 else aniSpear.play("Swing_Normal_Left")
 				Global.canInput = false; yield(ani, "animation_finished"); Global.canInput = true
 			else:		#Ducked Attack
 				ani.play("Spear_Duck_Right") if direction == 1 else ani.play("Spear_Duck_Left")
+				aniSpear.play("Duck_Normal_Right") if direction == 1 else aniSpear.play("Duck_Normal_Left")
 				Global.canInput = false; yield(ani, "animation_finished"); Global.canInput = true
-			attacking = false
+			atkAir = false
 			bigFall = false
+			attacking = false
 
 		if landing:
-			#attacking = false
-			if bigFall:
-				ani.play("Landing_Right") if direction == 1 else ani.play("Landing_Left")
-				Global.canInput = false; yield(ani, "animation_finished"); Global.canInput = true
-				bigFall = false
-				landing = false
-				relaseDuckingPosition()
+			landing = false
+		if bigFall:
+			ani.play("Landing_Right") if direction == 1 else ani.play("Landing_Left")
+			Global.canInput = false; yield(ani, "animation_finished"); Global.canInput = true
+			bigFall = false
+			relaseDuckingPosition()
 
 		if !ducking and !ducked:
 			if velocity.x == 0 or (is_on_wall()):
@@ -122,11 +144,12 @@ func animate_player():
 				Global.canMoveLeftRight = false
 			ducking = false
 
-	else:
-		if attacking: #Air Attack
+	else:	#On the Air
+
+		if atkAir: #Air Attack
 			aniSpear.play("Swing_Normal_Right") if direction == 1 else aniSpear.play("Swing_Normal_Left")
-			ani.play("Spear_Jump_Right") if direction == 1 else ani.play("Spear_Jump_Left")
 			yield(ani, "animation_finished")
+			atkAir = false
 			attacking = false
 		if (is_on_wall()) and Global.canWallJump:
 			ani.play("Clinging_Right") if direction == 1 else ani.play("Clinging_Left")
@@ -134,6 +157,9 @@ func animate_player():
 			ani.play("Jumping_Right") if direction == 1 else ani.play("Jumping_Left")
 		else:
 			ani.play("Falling_Right") if direction == 1 else ani.play("Falling_Left")
+
+func reset_snap():
+	snapVector = SNAP_DIRECTION * SNAP_LENGTH
 
 func moveGrounded():
 	if (is_on_floor()):
