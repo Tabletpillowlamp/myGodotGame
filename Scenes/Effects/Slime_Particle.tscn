@@ -1,0 +1,42 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Scripts/Enemies/Enemy_Effects/Slime_Particle.gd" type="Script" id=1]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.869565 )
+colors = PoolColorArray( 0.0438881, 0.749023, 0.422623, 1, 0.0887032, 0.987305, 0.755634, 1 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="Curve" id=3]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.772727 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=4]
+curve = SubResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=5]
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+spread = 90.0
+gravity = Vector3( 0, 98, 0 )
+initial_velocity = 150.0
+initial_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+damping = 100.0
+angle = 180.0
+scale = 3.0
+scale_curve = SubResource( 4 )
+color_ramp = SubResource( 2 )
+
+[node name="Slime_Particle" type="Particles2D"]
+emitting = false
+amount = 10
+lifetime = 0.4
+one_shot = true
+speed_scale = 1.25
+explosiveness = 0.8
+randomness = 0.3
+process_material = SubResource( 5 )
+script = ExtResource( 1 )

@@ -30,6 +30,8 @@ var timerTest = 0	#Debugging Purposes
 
 onready var ani = $Aurelia_Ani
 onready var aniSpear = $Spear_Ani
+onready var aniSword = $Sword_Ani
+onready var interface = get_node("Interface")
 
 func get_input(delta):
 	velocity.x = 0
@@ -79,8 +81,14 @@ func get_input(delta):
 		if !(is_on_floor()):
 			#Animation must be here to prevent falling animation to be played while
 			#atkAir is on creating a yield loop.
-			ani.play("Spear_Jump_Right") if direction == 1 else ani.play("Spear_Jump_Left")
 			atkAir = true
+			readyWeapon(1)
+
+	if Input.is_action_just_pressed("scroll_left"):
+		if !attacking: interface.weaponSwitch(false)
+
+	if Input.is_action_just_pressed("scroll_right"):
+		if !attacking: interface.weaponSwitch()
 
 	#gravity
 	velocity.y += gravity * delta
@@ -104,12 +112,12 @@ func animate_player():
 		if attacking:
 			if !ducked: #Grounded Attack
 				if !atkAir:
-					ani.play("Spear_Right") if direction == 1 else ani.play("Spear_Left")
-					aniSpear.play("Swing_Normal_Right") if direction == 1 else aniSpear.play("Swing_Normal_Left")
+					readyWeapon(0)
+					useWeapon()
 				Global.canInput = false; yield(ani, "animation_finished"); Global.canInput = true
 			else:		#Ducked Attack
-				ani.play("Spear_Duck_Right") if direction == 1 else ani.play("Spear_Duck_Left")
-				aniSpear.play("Duck_Normal_Right") if direction == 1 else aniSpear.play("Duck_Normal_Left")
+				readyWeapon(2)
+				useWeapon(true)
 				Global.canInput = false; yield(ani, "animation_finished"); Global.canInput = true
 			atkAir = false
 			bigFall = false
@@ -147,7 +155,7 @@ func animate_player():
 	else:	#On the Air
 
 		if atkAir: #Air Attack
-			aniSpear.play("Swing_Normal_Right") if direction == 1 else aniSpear.play("Swing_Normal_Left")
+			useWeapon()
 			yield(ani, "animation_finished")
 			atkAir = false
 			attacking = false
@@ -157,6 +165,34 @@ func animate_player():
 			ani.play("Jumping_Right") if direction == 1 else ani.play("Jumping_Left")
 		else:
 			ani.play("Falling_Right") if direction == 1 else ani.play("Falling_Left")
+
+func readyWeapon(type):
+	if Global.weaponType == 0:
+		if type == 0:
+			ani.play("Spear_Right") if direction == 1 else ani.play("Spear_Left")
+		elif type == 1:
+			ani.play("Spear_Jump_Right") if direction == 1 else ani.play("Spear_Jump_Left")
+		else:
+			ani.play("Spear_Duck_Right") if direction == 1 else ani.play("Spear_Duck_Left")
+	if Global.weaponType == 1:
+		if type == 0:
+			ani.play("Sword_Right") if direction == 1 else ani.play("Sword_Left")
+		elif type == 1:
+			ani.play("Sword_Jump_Right") if direction == 1 else ani.play("Sword_Jump_Left")
+		else:
+			ani.play("Sword_Duck_Right") if direction == 1 else ani.play("Sword_Duck_Left")
+
+func useWeapon(ducked=false):
+	if Global.weaponType == 0:
+		if !ducked:
+			aniSpear.play("Swing_Normal_Right") if direction == 1 else aniSpear.play("Swing_Normal_Left")
+		else:
+			aniSpear.play("Duck_Normal_Right") if direction == 1 else aniSpear.play("Duck_Normal_Left")
+	elif Global.weaponType == 1:
+		if !ducked:
+			aniSword.play("Slash_Normal_Right") if direction == 1 else aniSword.play("Slash_Normal_Left")
+		else:
+			aniSword.play("Duck_Normal_Right") if direction == 1 else aniSword.play("Duck_Normal_Left")
 
 func reset_snap():
 	snapVector = SNAP_DIRECTION * SNAP_LENGTH
