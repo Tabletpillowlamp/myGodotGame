@@ -1,4 +1,4 @@
-[gd_scene load_steps=53 format=2]
+[gd_scene load_steps=57 format=2]
 
 [ext_resource path="res://Assets/Graphics/Aurelia/Aurelia_1.png" type="Texture" id=1]
 [ext_resource path="res://Scripts/Player_Control.gd" type="Script" id=2]
@@ -84,6 +84,144 @@ tracks/1/keys = {
 "values": [ false ]
 }
 
+[sub_resource type="Animation" id=50]
+resource_name = "Damage_Air_Left"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 59, 71, 83, 71 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Aurelia_Area/Aurelia_Hitbox:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=51]
+resource_name = "Damage_Air_Right"
+length = 0.7
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 58, 70, 82, 70 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Aurelia_Area/Aurelia_Hitbox:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=53]
+resource_name = "Damage_Left"
+length = 1.0625
+step = 0.0625
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.0625, 0.125, 0.1875, 0.4375, 0.5625, 0.6875, 0.8125, 0.9375 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 132, 133, 134, 135, 133, 132, 3, 4, 5 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Aurelia_Collision:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Aurelia_Area/Aurelia_Hitbox:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
+[sub_resource type="Animation" id=52]
+resource_name = "Damage_Right"
+length = 1.0625
+step = 0.0625
+tracks/0/type = "value"
+tracks/0/path = NodePath("Aurelia_Normal:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.0625, 0.125, 0.1875, 0.4375, 0.5625, 0.6875, 0.8125, 0.9375 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 128, 129, 130, 131, 130, 129, 128, 0, 1 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Aurelia_Collision:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Aurelia_Area/Aurelia_Hitbox:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+
 [sub_resource type="Animation" id=34]
 resource_name = "Duck_Left"
 length = 0.1
@@ -147,6 +285,18 @@ tracks/4/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ Vector2( 1, 0.6 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Aurelia_Area/Aurelia_Hitbox:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=12]
@@ -213,6 +363,18 @@ tracks/4/keys = {
 "update": 1,
 "values": [ Vector2( 1, 0.6 ) ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Aurelia_Area/Aurelia_Hitbox:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=14]
 resource_name = "Ducking_Left"
@@ -230,6 +392,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 45, 46, 47 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Aurelia_Area/Aurelia_Hitbox:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=15]
 resource_name = "Ducking_Right"
@@ -246,6 +420,18 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
 "values": [ 42, 43, 44 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Aurelia_Area/Aurelia_Hitbox:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=6]
@@ -442,6 +628,18 @@ tracks/4/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Aurelia_Area/Aurelia_Hitbox:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
 [sub_resource type="Animation" id=17]
 resource_name = "GettingUp_Right"
@@ -506,6 +704,18 @@ tracks/4/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Aurelia_Area/Aurelia_Hitbox:visible")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
 }
 
 [sub_resource type="Animation" id=3]
@@ -573,6 +783,18 @@ tracks/4/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Aurelia_Area/Aurelia_Hitbox:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.25 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=2]
 resource_name = "Idle_Right"
@@ -639,6 +861,18 @@ tracks/4/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Aurelia_Area/Aurelia_Hitbox:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.25 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=8]
 resource_name = "Jumping_Left"
@@ -704,6 +938,18 @@ tracks/4/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
 }
+tracks/5/type = "value"
+tracks/5/path = NodePath("Aurelia_Area/Aurelia_Hitbox:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=9]
 resource_name = "Jumping_Right"
@@ -768,6 +1014,18 @@ tracks/4/keys = {
 "transitions": PoolRealArray( 1 ),
 "update": 0,
 "values": [ Vector2( 1, 1 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Aurelia_Area/Aurelia_Hitbox:disabled")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=11]
@@ -984,6 +1242,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 66, 67, 68, 69, 68, 67, 66 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Aurelia_Area/Aurelia_Hitbox:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=20]
 resource_name = "Spear_Right"
@@ -1000,6 +1270,18 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 54, 55, 56, 57, 56, 55, 54 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Aurelia_Area/Aurelia_Hitbox:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=37]
@@ -1086,6 +1368,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 113, 114, 115, 114, 113, 112 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Aurelia_Area/Aurelia_Hitbox:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=42]
 resource_name = "Sword_Right"
@@ -1103,6 +1397,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 109, 110, 111, 110, 109, 108 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Aurelia_Area/Aurelia_Hitbox:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=4]
 resource_name = "Walk_Left"
@@ -1119,6 +1425,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [ 72, 73, 74, 73, 72, 75, 76, 77, 76, 75 ]
 }
+tracks/1/type = "value"
+tracks/1/path = NodePath("Aurelia_Area/Aurelia_Hitbox:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
 [sub_resource type="Animation" id=5]
 resource_name = "Walk_Right"
@@ -1134,6 +1452,18 @@ tracks/0/keys = {
 "transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 1,
 "values": [ 60, 61, 62, 61, 60, 63, 64, 65, 64, 63 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Aurelia_Area/Aurelia_Hitbox:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [sub_resource type="Animation" id=35]
@@ -1805,15 +2135,19 @@ drag_margin_v_enabled = true
 texture = ExtResource( 1 )
 hframes = 12
 vframes = 12
+frame = 109
 
 [node name="Aurelia_Collision" type="CollisionShape2D" parent="."]
-position = Vector2( 0, 3 )
+visible = false
+position = Vector2( 0, 11 )
+scale = Vector2( 1, 0.6 )
 shape = SubResource( 1 )
 
-[node name="Aurelia_Area" type="Area2D" parent="."]
+[node name="Aurelia_Area" type="Area2D" parent="." groups=["Player"]]
 
 [node name="Aurelia_Hitbox" type="CollisionShape2D" parent="Aurelia_Area"]
-position = Vector2( 0, 3 )
+position = Vector2( 0, 11 )
+scale = Vector2( 1, 0.6 )
 shape = SubResource( 18 )
 
 [node name="Spear" type="Area2D" parent="." groups=["Spear", "Weapon"]]
@@ -1853,6 +2187,10 @@ disabled = true
 [node name="Aurelia_Ani" type="AnimationPlayer" parent="."]
 anims/Clinging_Left = SubResource( 26 )
 anims/Clinging_Right = SubResource( 27 )
+anims/Damage_Air_Left = SubResource( 50 )
+anims/Damage_Air_Right = SubResource( 51 )
+anims/Damage_Left = SubResource( 53 )
+anims/Damage_Right = SubResource( 52 )
 anims/Duck_Left = SubResource( 34 )
 anims/Duck_Right = SubResource( 12 )
 anims/Ducking_Left = SubResource( 14 )
@@ -1899,3 +2237,5 @@ anims/Slash_Normal_Left = SubResource( 46 )
 anims/Slash_Normal_Right = SubResource( 47 )
 
 [node name="Interface" parent="." instance=ExtResource( 5 )]
+
+[connection signal="area_entered" from="Aurelia_Area" to="." method="_on_Aurelia_Area_area_entered"]

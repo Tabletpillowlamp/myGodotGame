@@ -120,7 +120,7 @@ frame = 1
 position = Vector2( 0, 9.375 )
 shape = SubResource( 1 )
 
-[node name="Slime_Area" type="Area2D" parent="."]
+[node name="Slime_Area" type="Area2D" parent="." groups=["Enemy"]]
 
 [node name="Slime_Hitbox" type="CollisionShape2D" parent="Slime_Area"]
 position = Vector2( 0, 9.25 )

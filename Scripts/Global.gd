@@ -4,6 +4,9 @@ extends Node
 var canInput 			= true
 var canMoveLeftRight 	= true
 
+#Temp Variables
+var targetAtk			= 0
+
 #Types
 var weaponType			= 0
 

@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Assets/Fonts/Adventurer.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/Damage_Numbers.gd" type="Script" id=2]
@@ -49,6 +49,47 @@ tracks/2/keys = {
 "values": [ Color( 1, 0, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 0, 0, 0 ) ]
 }
 
+[sub_resource type="Animation" id=3]
+resource_name = "pDmg"
+length = 0.5
+step = 0.0625
+tracks/0/type = "value"
+tracks/0/path = NodePath("num_Amount:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.125, 0.25, 0.375 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -50, -15.5 ), Vector2( -52, -25.5 ), Vector2( -48, -35.5 ), Vector2( -50, -45.5 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("num_Amount:custom_colors/font_color")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("num_Amount:custom_colors/font_outline_modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.25, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 0, 0, 1 ), Color( 1, 0, 0, 1 ), Color( 1, 0, 0, 0 ) ]
+}
+
 [node name="Damage_Number" type="Position2D"]
 script = ExtResource( 2 )
 
@@ -58,9 +99,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 margin_left = -50.0
-margin_top = -12.5
+margin_top = -15.5
 margin_right = 50.0
-margin_bottom = 12.5
+margin_bottom = 9.5
 focus_mode = 1
 custom_colors/font_color = Color( 1, 1, 1, 1 )
 custom_colors/font_outline_modulate = Color( 1, 0, 0, 1 )
@@ -71,5 +112,6 @@ valign = 1
 
 [node name="dmgNum_Ani" type="AnimationPlayer" parent="."]
 anims/Popup = SubResource( 2 )
+anims/pDmg = SubResource( 3 )
 
 [connection signal="animation_finished" from="dmgNum_Ani" to="." method="_on_dmgNum_Ani_animation_finished"]

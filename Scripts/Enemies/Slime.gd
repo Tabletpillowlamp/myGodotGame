@@ -13,6 +13,7 @@ var tDamage = 0
 
 var maxHP : int = 32
 var defense : int = 5
+var attack : int = 5
 var speed : int = 30
 
 const slimeEffect = preload("res://Scenes/Effects/Slime_Particle.tscn")
@@ -74,6 +75,9 @@ func _physics_process(delta):
 var spearLag = false
 
 func _on_Slime_Area_area_entered(area):
+	
+	if area.is_in_group("Player"):
+		Global.targetAtk = attack
 
 	if !spearLag and area.is_in_group("Weapon"):
 
@@ -98,6 +102,7 @@ func createSlimeDmg():
 	var dNum = damageNum.instance()
 	dNum.amount = damage
 	add_child(dNum)
+	dNum.dmgPopup()
 	
 	tDamage += damage 
 

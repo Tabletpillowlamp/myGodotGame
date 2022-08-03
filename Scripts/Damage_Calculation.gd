@@ -7,6 +7,10 @@ var damage = 0
 var spearAtk			= 5
 var swordAtk			= 4
 
+func damagePlayer(targetAtk):
+	damage = (targetAtk * 4) - pStat.defense * 2
+	return damage
+
 func dSpear(targetDef,tipper=false):
 	damage = (pStat.attack + spearAtk * 4) - targetDef * 2
 	if tipper:

@@ -5,6 +5,13 @@ const SNAP_DIRECTION = Vector2.DOWN
 const SNAP_LENGTH = 32.0
 const SLOPE_THRESHOLD = deg2rad(60)
 
+var HP = 100
+var MP = 100
+var damage = 0
+
+const damageNum = preload("res://Scenes/Effects/Damage_Number.tscn")
+var cDamage =  load("res://Scripts/Damage_Calculation.gd").new()
+
 var loop = 0
 var speed : int = 170
 var air_speed : int = 120
@@ -25,6 +32,7 @@ var attacking = false
 var atkAir = false
 var doubleJumped = false
 var wallJumped = false
+var damaged = 0
 
 var timerTest = 0	#Debugging Purposes
 
@@ -36,53 +44,70 @@ onready var interface = get_node("Interface")
 func get_input(delta):
 	velocity.x = 0
 
-	if Input.is_action_pressed("move_left") and !wallJumped:
-		if !attacking: direction = -1
-		if Global.canMoveLeftRight:
-			moveGrounded()
+	if damaged == 0:
+		if Input.is_action_pressed("move_left") and !wallJumped:
+			if !attacking: direction = -1
+			if Global.canMoveLeftRight:
+				moveGrounded()
 
-	if Input.is_action_pressed("move_right") and !wallJumped:
-		if !attacking: direction = 1
-		if Global.canMoveLeftRight:
-			moveGrounded()
+		if Input.is_action_pressed("move_right") and !wallJumped:
+			if !attacking: direction = 1
+			if Global.canMoveLeftRight:
+				moveGrounded()
 
-	if Input.is_action_just_pressed("jump"):
+		if Input.is_action_just_pressed("jump"):
+			snapVector = Vector2()
+			if (is_on_floor()):
+				velocity.y = -jump_speed
+			elif Global.canWallJump and (is_on_wall()):
+				velocity.y = -jump_speed
+				direction *= -1
+				wallJumped = true
+			elif Global.canDoubleJump and !doubleJumped:
+				velocity.y = -jump_speed
+				wallJumped = false
+				doubleJumped = true
+			if ducked:
+				relaseDuckingPosition()
+
+		if wallJumped:
+			velocity.x += direction * (speed)
+
+		if Input.is_action_just_released("jump"):
+			if velocity.y < -200:
+				velocity.y += jump_speed * 0.25
+
+		if Input.is_action_pressed("duck"):
+			if (is_on_floor()):
+				if !ducked:
+					ducking = true
+		elif ducked:
+			duckingReleased = true
+		if Input.is_action_just_released("duck"):
+			duckingReleased = true
+		if Input.is_action_just_pressed("attack"):
+			attacking = true
+			if !(is_on_floor()):
+				#Animation must be here to prevent falling animation to be played while
+				#atkAir is on creating a yield loop.
+				atkAir = true
+				readyWeapon(1)
+				
+	if damaged == 1:
+		
+		var dNum = damageNum.instance()
+		dNum.amount = cDamage.damagePlayer(Global.targetAtk)
+		add_child(dNum)
+		dNum.dmgPopupPlayer()
+		
+		HP -= damage
+		
 		snapVector = Vector2()
-		if (is_on_floor()):
-			velocity.y = -jump_speed
-		elif Global.canWallJump and (is_on_wall()):
-			velocity.y = -jump_speed
-			direction *= -1
-			wallJumped = true
-		elif Global.canDoubleJump and !doubleJumped:
-			velocity.y = -jump_speed
-			wallJumped = false
-			doubleJumped = true
-		if ducked:
-			relaseDuckingPosition()
-
-	if wallJumped:
-		velocity.x += direction * (speed)
-
-	if Input.is_action_just_released("jump"):
-		if velocity.y < -200:
-			velocity.y += jump_speed * 0.25
-
-	if Input.is_action_pressed("duck"):
-		if (is_on_floor()):
-			if !ducked:
-				ducking = true
-	elif ducked:
-		duckingReleased = true
-	if Input.is_action_just_released("duck"):
-		duckingReleased = true
-	if Input.is_action_just_pressed("attack"):
-		attacking = true
-		if !(is_on_floor()):
-			#Animation must be here to prevent falling animation to be played while
-			#atkAir is on creating a yield loop.
-			atkAir = true
-			readyWeapon(1)
+		velocity.y = -jump_speed * 0.75
+		damaged = 2
+		
+	if damaged != 0:
+		velocity.x += direction * (speed * 0.75)
 
 	if Input.is_action_just_pressed("scroll_left"):
 		if !attacking: interface.weaponSwitch(false)
@@ -92,11 +117,13 @@ func get_input(delta):
 
 	#gravity
 	velocity.y += gravity * delta
+
 	if snapVector != Vector2():
 		velocity.y = move_and_slide_with_snap(velocity,snapVector,FLOOR_NORMAL
 			,true,4,SLOPE_THRESHOLD).y 
 	else:
 		velocity.y = move_and_slide(velocity,FLOOR_NORMAL).y
+
 	if (is_on_floor()) and snapVector == Vector2():
 		reset_snap()
 
@@ -104,6 +131,7 @@ func get_input(delta):
 	if velocity.y > 500 and !(is_on_floor()) and !bigFall: bigFall = true
 
 func animate_player():
+	
 	if (is_on_floor()):	#On the Ground
 
 		doubleJumped = false
@@ -166,6 +194,7 @@ func animate_player():
 		else:
 			ani.play("Falling_Right") if direction == 1 else ani.play("Falling_Left")
 
+
 func readyWeapon(type):
 	if Global.weaponType == 0:
 		if type == 0:
@@ -209,6 +238,27 @@ func relaseDuckingPosition():
 	duckingReleased = false
 	Global.canMoveLeftRight = true
 
+func damage_animate_player(_delta):
+	if (damaged != 2 and damaged != 3) or !(is_on_floor()):
+		if Global.canInput != false:
+			ani.play("Damage_Air_Left") if direction == 1 else ani.play("Damage_Air_Right")
+	else:
+		if damaged == 2: direction *= -1
+		damaged = 3
+		bigFall = false
+		ani.play("Landing_Right") if direction == 1 else ani.play("Landing_Left")
+		Global.canInput = false; yield(ani, "animation_finished"); Global.canInput = true
+		reset_snap()
+		damaged = 0
+
 func _physics_process(delta):
 	if Global.canInput: get_input(delta)
-	animate_player()
+	if !damaged:
+		animate_player()
+	else:
+		damage_animate_player(delta)
+
+func _on_Aurelia_Area_area_entered(area):
+	if area.is_in_group("Enemy"):
+		direction *= -1
+		damaged = 1
